@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Application.Course.ListCourses
 {
-    public class ListCoursesResponse
+    public class ListCoursesQueryResponse
     {
         public bool Successful { get; set; }
         public IList<Domain.Courses.Course> Courses { get; set; }
 
-        public ListCoursesResponse()
+        public ListCoursesQueryResponse()
         {
             Courses = new List<Domain.Courses.Course>();
         }

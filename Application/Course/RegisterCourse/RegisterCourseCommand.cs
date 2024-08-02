@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Application.Course.RegisterCourse
 {
-    public class RegisterCourseCommand : IRequest<RegisterCourseResponse>
+    public class RegisterCourseCommand : IRequest<RegisterCourseCommandResponse>
     {
         public required string Name { get; set; }
         public double RegistrationFee { get; set; }

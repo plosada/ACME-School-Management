@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Application.Course.RegisterCourse
 {
-    public class RegisterCourseResponse
+    public class RegisterCourseCommandResponse
     {
         public bool Successful { get; set; }
         public int Id { get; set; }

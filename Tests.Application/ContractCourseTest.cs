@@ -18,7 +18,7 @@ namespace Tests.Application
         private readonly Mock<IStudentRepository> _studentRepository;
         private readonly Mock<IPaymentService> _paymentService;
 
-        private readonly ContractCourseHandler _handler;
+        private readonly ContractCourseCommandHandler _handler;
 
         private readonly Student student;
         private readonly Course course;
@@ -26,7 +26,7 @@ namespace Tests.Application
         private ContractCourseCommand request;
         private readonly CancellationToken _cancellationToken = CancellationToken.None;
 
-        private readonly ContractCourseValidation _contractCourseValidator;
+        private readonly ContractCourseCommandValidation _contractCourseValidator;
 
         public ContractCourseTest()
         {
@@ -34,9 +34,9 @@ namespace Tests.Application
             _studentRepository = new Mock<IStudentRepository>();
             _paymentService = new Mock<IPaymentService>();
 
-            _handler = new ContractCourseHandler(_courseRepository.Object, _studentRepository.Object, _paymentService.Object);
+            _handler = new ContractCourseCommandHandler(_courseRepository.Object, _studentRepository.Object, _paymentService.Object);
 
-            _contractCourseValidator = new ContractCourseValidation();
+            _contractCourseValidator = new ContractCourseCommandValidation();
 
             course = new Course {  Id = 1, Name = "Course", Start = DateTime.Parse("2024-01-01"), End = DateTime.Parse("2024-12-31") };
             student = new Student { Id = 1, Age = 18, Name = "Pablo" };

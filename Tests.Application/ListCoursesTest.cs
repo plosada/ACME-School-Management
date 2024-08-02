@@ -16,21 +16,21 @@ namespace Tests.Application
     {
         private readonly Mock<ICourseRepository> _courseRepository;
 
-        private readonly ListCoursesHandler _handler;
+        private readonly ListCoursesQueryHandler _handler;
 
         private readonly List<Course> courses;
 
         private readonly CancellationToken _cancellationToken = CancellationToken.None;
 
-        private readonly ListCoursesValidation _listCoursesValidator;
+        private readonly ListCoursesQueryValidation _listCoursesValidator;
 
         public ListCoursesTest()
         {
             _courseRepository = new Mock<ICourseRepository>();
 
-            _handler = new ListCoursesHandler(_courseRepository.Object);
+            _handler = new ListCoursesQueryHandler(_courseRepository.Object);
 
-            _listCoursesValidator = new ListCoursesValidation();
+            _listCoursesValidator = new ListCoursesQueryValidation();
 
             courses = new List<Course> {
                 new()
@@ -63,7 +63,7 @@ namespace Tests.Application
         [Fact]
         public async Task Handle_DateRange_One()
         {
-            var request = new ListCoursesCommand { DateFrom = DateTime.Parse("2024-01-01"), DateTo = DateTime.Parse("2024-12-31") };
+            var request = new ListCoursesQuery { DateFrom = DateTime.Parse("2024-01-01"), DateTo = DateTime.Parse("2024-12-31") };
 
             // Se configura el Mock
             _courseRepository.Setup(_ => _.GetAllCoursesAsync()).Returns(() => Task.FromResult(courses));
@@ -79,7 +79,7 @@ namespace Tests.Application
         [Fact]
         public async Task Handle_DateRange_Two()
         {
-            var request = new ListCoursesCommand { DateFrom = DateTime.Parse("2024-01-01"), DateTo = DateTime.Parse("2024-06-01") };
+            var request = new ListCoursesQuery { DateFrom = DateTime.Parse("2024-01-01"), DateTo = DateTime.Parse("2024-06-01") };
 
             // Se configura el Mock
             _courseRepository.Setup(_ => _.GetAllCoursesAsync()).Returns(() => Task.FromResult(courses));
@@ -95,7 +95,7 @@ namespace Tests.Application
         [Fact]
         public async Task Handle_DateRange_Three()
         {
-            var request = new ListCoursesCommand { DateFrom = DateTime.Parse("2023-01-01"), DateTo = DateTime.Parse("2023-12-31") };
+            var request = new ListCoursesQuery { DateFrom = DateTime.Parse("2023-01-01"), DateTo = DateTime.Parse("2023-12-31") };
 
             // Se configura el Mock
             _courseRepository.Setup(_ => _.GetAllCoursesAsync()).Returns(() => Task.FromResult(courses));
@@ -111,7 +111,7 @@ namespace Tests.Application
         [Fact]
         public async Task Handle_ThrowException()
         {
-            var request = new ListCoursesCommand { DateFrom = DateTime.Parse("2024-01-01"), DateTo = DateTime.Parse("2024-12-31") };
+            var request = new ListCoursesQuery { DateFrom = DateTime.Parse("2024-01-01"), DateTo = DateTime.Parse("2024-12-31") };
 
             // Se configura el Mock
             _courseRepository.Setup(_ => _.GetAllCoursesAsync()).Throws(new Exception());
@@ -126,7 +126,7 @@ namespace Tests.Application
         [Fact]
         public void Handle_ToDateLessThanFromDate()
         {
-            var request = new ListCoursesCommand { DateFrom = DateTime.Parse("2024-12-31"), DateTo = DateTime.Parse("2024-01-01") };
+            var request = new ListCoursesQuery { DateFrom = DateTime.Parse("2024-12-31"), DateTo = DateTime.Parse("2024-01-01") };
 
             // Act
             var result = _listCoursesValidator.Validate(request);

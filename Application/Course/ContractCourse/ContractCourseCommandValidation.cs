@@ -7,9 +7,9 @@ using System.Linq;
 
 namespace Application.Course.ContractCourse
 {
-    public class ContractCourseValidation : AbstractValidator<ContractCourseCommand>
+    public class ContractCourseCommandValidation : AbstractValidator<ContractCourseCommand>
     {
-        public ContractCourseValidation()
+        public ContractCourseCommandValidation()
         {
             RuleFor(x => x.CourseId)
                 .Cascade(CascadeMode.Stop)

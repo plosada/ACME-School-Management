@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Application.Course.ListCourses
 {
-    public class ListCoursesCommand : IRequest<ListCoursesResponse>
+    public class ListCoursesQuery : IRequest<ListCoursesQueryResponse>
     {
         public required DateTime DateFrom { get; set; }
         public required DateTime DateTo { get; set; }

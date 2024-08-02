@@ -9,16 +9,16 @@ using MediatR;
 
 namespace Application.Course.RegisterCourse
 {
-    public class RegisterCourseHandler : IRequestHandler<RegisterCourseCommand, RegisterCourseResponse>
+    public class RegisterCourseCommandHandler : IRequestHandler<RegisterCourseCommand, RegisterCourseCommandResponse>
     {
         private readonly ICourseRepository _CourseRepository;
 
-        public RegisterCourseHandler(ICourseRepository CourseRepository)
+        public RegisterCourseCommandHandler(ICourseRepository CourseRepository)
         {
             _CourseRepository = CourseRepository;
         }
 
-        public async Task<RegisterCourseResponse> Handle(RegisterCourseCommand request, CancellationToken cancellationToken)
+        public async Task<RegisterCourseCommandResponse> Handle(RegisterCourseCommand request, CancellationToken cancellationToken)
         {
             var newCourse = new Domain.Courses.Course { Name = request.Name, RegistrationFee = request.RegistrationFee, Start = request.Start, End = request.End };
 
@@ -26,11 +26,11 @@ namespace Application.Course.RegisterCourse
             {
                 var course = await _CourseRepository.CreateCourseAsync(newCourse);
 
-                return new RegisterCourseResponse { Id = course.Id, Name = course.Name, RegistrationFee = course.RegistrationFee, Start = course.Start, End = course.End, Successful = true };
+                return new RegisterCourseCommandResponse { Id = course.Id, Name = course.Name, RegistrationFee = course.RegistrationFee, Start = course.Start, End = course.End, Successful = true };
             }
             catch (Exception ex)
             {
-                return new RegisterCourseResponse { Successful = false };
+                return new RegisterCourseCommandResponse { Successful = false };
             }
         }
     }

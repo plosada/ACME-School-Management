@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Application.Students.RegisterStudent
 {
-    public class RegisterStudentCommand : IRequest<RegisterStudentResponse>
+    public class RegisterStudentCommand : IRequest<RegisterStudentCommandResponse>
     {
         public required string Name { get; set; }
         public required int Age { get; set; }

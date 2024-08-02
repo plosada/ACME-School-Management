@@ -9,16 +9,16 @@ using MediatR;
 
 namespace Application.Students.RegisterStudent
 {
-    public class RegisterStudentHandler : IRequestHandler<RegisterStudentCommand, RegisterStudentResponse>
+    public class RegisterStudentCommandHandler : IRequestHandler<RegisterStudentCommand, RegisterStudentCommandResponse>
     {
         private readonly IStudentRepository _studentRepository;
 
-        public RegisterStudentHandler(IStudentRepository studentRepository)
+        public RegisterStudentCommandHandler(IStudentRepository studentRepository)
         {
             _studentRepository = studentRepository;
         }
 
-        public async Task<RegisterStudentResponse> Handle(RegisterStudentCommand request, CancellationToken cancellationToken)
+        public async Task<RegisterStudentCommandResponse> Handle(RegisterStudentCommand request, CancellationToken cancellationToken)
         {
             var newStudent = new Domain.Students.Student { Name = request.Name, Age = request.Age };
 
@@ -26,11 +26,11 @@ namespace Application.Students.RegisterStudent
             {
                 var student = await _studentRepository.CreateStudentAsync(newStudent);
 
-                return new RegisterStudentResponse { Id = student.Id, Name = student.Name, Age = student.Age, Successful = true };
+                return new RegisterStudentCommandResponse { Id = student.Id, Name = student.Name, Age = student.Age, Successful = true };
             }
             catch (Exception ex)
             {
-                return new RegisterStudentResponse { Successful = false };
+                return new RegisterStudentCommandResponse { Successful = false };
             }            
         }
     }

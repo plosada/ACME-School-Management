@@ -10,46 +10,46 @@ using MediatR;
 
 namespace Application.Course.ContractCourse
 {
-    public class ContractCourseHandler : IRequestHandler<ContractCourseCommand, ContractCourseResponse>
+    public class ContractCourseCommandHandler : IRequestHandler<ContractCourseCommand, ContractCourseCommandResponse>
     {
         private readonly ICourseRepository _courseRepository;
         private readonly IStudentRepository _studentRepository;
         private readonly IPaymentService _paymentService;
 
-        public ContractCourseHandler(ICourseRepository courseRepository, IStudentRepository studentRepository, IPaymentService paymentService)
+        public ContractCourseCommandHandler(ICourseRepository courseRepository, IStudentRepository studentRepository, IPaymentService paymentService)
         {
             _courseRepository = courseRepository;
             _studentRepository = studentRepository;
             _paymentService = paymentService;
         }
 
-        public async Task<ContractCourseResponse> Handle(ContractCourseCommand request, CancellationToken cancellationToken)
+        public async Task<ContractCourseCommandResponse> Handle(ContractCourseCommand request, CancellationToken cancellationToken)
         {
             try
             {
                 var course = await _courseRepository.GetCourseAsync(request.CourseId);
 
-                if (course is null) return new ContractCourseResponse { Successful = false };
+                if (course is null) return new ContractCourseCommandResponse { Successful = false };
 
                 var student = await _studentRepository.GetStudentAsync(request.StudentId);
 
-                if (student is null) return new ContractCourseResponse { Successful = false };
+                if (student is null) return new ContractCourseCommandResponse { Successful = false };
 
                 if (course.PaymentRequired())
                 {
                     var validPayment = await _paymentService.ExecutePayment(student.Name, course.RegistrationFee);
 
-                    if (!validPayment) return new ContractCourseResponse { Course = course, Successful = false };
+                    if (!validPayment) return new ContractCourseCommandResponse { Course = course, Successful = false };
                 }
 
                 course.AddStudent(student);
                 await _courseRepository.UpdateCourseAsync(course);
 
-                return new ContractCourseResponse { Course = course, Successful = true };
+                return new ContractCourseCommandResponse { Course = course, Successful = true };
             }
             catch (Exception ex)
             {
-                return new ContractCourseResponse { Successful = false };
+                return new ContractCourseCommandResponse { Successful = false };
             }
         }
     }

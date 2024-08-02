@@ -13,25 +13,25 @@ namespace Tests.Application
     {
         private readonly Mock<IStudentRepository> _studentRepository;
 
-        private readonly RegisterStudentHandler _handler;
+        private readonly RegisterStudentCommandHandler _handler;
 
         private readonly Student student;
-        private readonly RegisterStudentResponse studentResponse;
+        private readonly RegisterStudentCommandResponse studentResponse;
         private RegisterStudentCommand request;
         private readonly CancellationToken _cancellationToken;
 
 
-        private readonly RegisterStudentValidation _StudentValidator;
+        private readonly RegisterStudentCommandValidation _StudentValidator;
 
         public RegisterStudentTest()
         {
             _studentRepository = new Mock<IStudentRepository>();
-            _handler = new RegisterStudentHandler(_studentRepository.Object);
+            _handler = new RegisterStudentCommandHandler(_studentRepository.Object);
 
-            _StudentValidator = new RegisterStudentValidation();
+            _StudentValidator = new RegisterStudentCommandValidation();
 
             student = new Student {  Id = 1 , Age = 18 , Name = "Pablo" };
-            studentResponse = new RegisterStudentResponse { Id = 1, Age = 18, Name = "Pablo" };
+            studentResponse = new RegisterStudentCommandResponse { Id = 1, Age = 18, Name = "Pablo" };
             request = new RegisterStudentCommand { Name = "Pablo", Age = 18 };
             _cancellationToken = CancellationToken.None;
         }

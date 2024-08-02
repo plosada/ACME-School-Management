@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Application.Course.ContractCourse
 {
-    public class ContractCourseCommand : IRequest<ContractCourseResponse>
+    public class ContractCourseCommand : IRequest<ContractCourseCommandResponse>
     {
         public int StudentId { get; set; }
         public int CourseId { get; set; }

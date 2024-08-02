@@ -7,9 +7,9 @@ using System.Linq;
 
 namespace Application.Course.ListCourses
 {
-    public class ListCoursesValidation : AbstractValidator<ListCoursesCommand>
+    public class ListCoursesQueryValidation : AbstractValidator<ListCoursesQuery>
     {
-        public ListCoursesValidation()
+        public ListCoursesQueryValidation()
         {
             RuleFor(x => x.DateFrom)
                 .Cascade(CascadeMode.Stop)

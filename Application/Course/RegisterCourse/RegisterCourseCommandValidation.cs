@@ -7,9 +7,9 @@ using System.Linq;
 
 namespace Application.Course.RegisterCourse
 {
-    public class RegisterCourseValidation : AbstractValidator<RegisterCourseCommand>
+    public class RegisterCourseCommandValidation : AbstractValidator<RegisterCourseCommand>
     {
-        public RegisterCourseValidation()
+        public RegisterCourseCommandValidation()
         {
             RuleFor(x => x.Name)
                 .Cascade(CascadeMode.Stop)

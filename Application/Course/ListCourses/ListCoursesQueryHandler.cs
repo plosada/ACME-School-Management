@@ -11,16 +11,16 @@ using MediatR;
 
 namespace Application.Course.ListCourses
 {
-    public class ListCoursesHandler : IRequestHandler<ListCoursesCommand, ListCoursesResponse>
+    public class ListCoursesQueryHandler : IRequestHandler<ListCoursesQuery, ListCoursesQueryResponse>
     {
         private readonly ICourseRepository _courseRepository;
 
-        public ListCoursesHandler(ICourseRepository courseRepository)
+        public ListCoursesQueryHandler(ICourseRepository courseRepository)
         {
             _courseRepository = courseRepository;
         }
 
-        public async Task<ListCoursesResponse> Handle(ListCoursesCommand request, CancellationToken cancellationToken)
+        public async Task<ListCoursesQueryResponse> Handle(ListCoursesQuery request, CancellationToken cancellationToken)
         {
             try
             {
@@ -31,11 +31,11 @@ namespace Application.Course.ListCourses
                     c.Start <= request.DateFrom && c.End >= request.DateTo ||
                     c.Start <= request.DateFrom && c.End < request.DateTo);
 
-                return new ListCoursesResponse { Courses = courses, Successful = true };
+                return new ListCoursesQueryResponse { Courses = courses, Successful = true };
             }
             catch (Exception ex)
             {
-                return new ListCoursesResponse { Successful = false };
+                return new ListCoursesQueryResponse { Successful = false };
             }
         }
     }

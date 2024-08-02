@@ -15,26 +15,26 @@ namespace Tests.Application
     {
         private readonly Mock<ICourseRepository> _courseRepository;
 
-        private readonly RegisterCourseHandler _handler;
+        private readonly RegisterCourseCommandHandler _handler;
 
         private readonly Course course;
-        private readonly RegisterCourseResponse registerCourseResponse;
+        private readonly RegisterCourseCommandResponse registerCourseResponse;
         private RegisterCourseCommand request;
         private readonly CancellationToken _cancellationToken;
 
 
-        private readonly RegisterCourseValidation _registerCourseValidator;
+        private readonly RegisterCourseCommandValidation _registerCourseValidator;
 
         public RegisterCourseTest()
         {
             _courseRepository = new Mock<ICourseRepository>();
-            _handler = new RegisterCourseHandler(_courseRepository.Object);
+            _handler = new RegisterCourseCommandHandler(_courseRepository.Object);
 
-            _registerCourseValidator = new RegisterCourseValidation();
+            _registerCourseValidator = new RegisterCourseCommandValidation();
 
             course = new Course {  Id = 1, Name = "Course", Start = DateTime.Parse("2024-01-01"), End = DateTime.Parse("2024-12-31") };
 
-            registerCourseResponse = new RegisterCourseResponse { Id = 1, Name = "Course", Start = DateTime.Parse("2024-01-01"), End = DateTime.Parse("2024-12-31") };
+            registerCourseResponse = new RegisterCourseCommandResponse { Id = 1, Name = "Course", Start = DateTime.Parse("2024-01-01"), End = DateTime.Parse("2024-12-31") };
 
             request = new RegisterCourseCommand { Name = "Course", RegistrationFee = 1, Start = DateTime.Parse("2024-01-01"), End = DateTime.Parse("2024-12-31") };
             _cancellationToken = CancellationToken.None;
